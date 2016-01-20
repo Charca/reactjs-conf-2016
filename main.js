@@ -22,6 +22,7 @@ let {
 
 let Screen = require('./components/Screen');
 let Schedule = require('./components/Schedule');
+let Tweets = require('./components/Tweets');
 let globals = require('./globals');
 
 class App extends React.Component {
@@ -62,7 +63,7 @@ class App extends React.Component {
             selected={this.state.selectedTab === 'tweets'}
             onPress={() => { this.setState({selectedTab: 'tweets'}); }}>
             <Screen title="Tweets">
-              <Text>Hey</Text>
+              <Tweets />
             </Screen>
           </TabBarIOS.Item>
         </TabBarIOS>
