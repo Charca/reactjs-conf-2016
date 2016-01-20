@@ -85,8 +85,7 @@ let styles = StyleSheet.create({
   },
   separator: {
     height: .5,
-    backgroundColor: globals.colors.lightGrey,
-    marginBottom: 15
+    backgroundColor: globals.colors.lightGrey
   }
 });
 
