@@ -5,6 +5,8 @@
   "main": "main.js",
   "author": null,
   "dependencies": {
-    "react-native": "github:exponentjs/react-native#2016-01-02"
+    "moment": "^2.11.1",
+    "react-native": "github:exponentjs/react-native#2016-01-02",
+    "react-native-parsed-text": "0.0.10"
   }
 }
