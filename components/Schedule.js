@@ -137,14 +137,13 @@ class Schedule extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Schedule</Text>
-        </View>
         <ListView
           style={styles.list}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow.bind(this)}
           renderSectionHeader={this.renderSectionHeader.bind(this)}
+          contentInset={{bottom:48}}
+          automaticallyAdjustContentInsets={false}
           onScroll={this._handleScroll.bind(this)} />
       </View>
     );
@@ -170,7 +169,7 @@ class Schedule extends React.Component {
     }
 
     return (
-      <View style={styles.row}>
+      <View style={styles.row} key={rowID}>
         <View style={styles.timeContainer}>
           <Text style={styles.timeText}>{rowData.startTime}</Text>
         </View>
@@ -216,18 +215,6 @@ let styles = StyleSheet.create({
   container: {
     flex: 1
   },
-  header: {
-    backgroundColor: globals.colors.primary,
-    height: 64
-  },
-  headerText: {
-    color: '#FFF',
-    fontSize: 17,
-    fontWeight: 'bold',
-    marginTop: 32,
-    alignSelf: 'center',
-  },
-
   // ListView
   list: {
     flex: 1
