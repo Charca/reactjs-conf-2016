@@ -9,6 +9,7 @@ let {
 } = React;
 
 let Tweet = require('./Tweet');
+let Spinner = require('./Spinner');
 let globals = require('../globals');
 
 class Tweets extends React.Component {
@@ -25,9 +26,13 @@ class Tweets extends React.Component {
   }
 
   componentDidMount() {
+    this.loadTweets();
+  }
+
+  loadTweets() {
     this.setState({loading: true});
-    var url = `http://192.168.1.9:1234/reactjs-conf/twitter`;
-    fetch(url).then((res) => res.json())
+    var url = `${globals.serverUrl}/reactjs-conf/twitter`;
+    return fetch(url).then((res) => res.json())
       .then((res) => {
         this.setState({
           loading: false,
@@ -37,13 +42,16 @@ class Tweets extends React.Component {
   }
 
   render() {
+    if(this.state.loading) {
+      return <Spinner />;
+    }
+
     return (
       <View style={styles.container}>
         <ListView
           style={styles.list}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow.bind(this)}
-          contentInset={{bottom:48}}
           automaticallyAdjustContentInsets={false} />
       </View>
     );

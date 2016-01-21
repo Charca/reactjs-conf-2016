@@ -8,7 +8,8 @@ let {
   ListView,
   Image,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } = React;
 
 let globals = require('../globals');
@@ -37,7 +38,10 @@ let day1Json = [
       name: 'Keith Poplawski',
       company: 'Namely',
       avatarUrl: 'http://conf.reactjs.com/img/keith-poplawski.jpg'
-    }
+    },
+    description: [
+      'As a belated gift, I’ve created a physical, standalone version of Jeopardy. Featuring React as the project’s interface, an Arduino and a node app running on a Raspberry Pi create an engaging and unique user experience. The presentation highlights React’s potential to respond to input beyond the mouse, including touch, physical buttons, and speech recognition.'
+    ]
   },
   {
     startTime: '11:00',
@@ -52,7 +56,12 @@ let day1Json = [
       name: 'Isaac Salier-Hellendag',
       company: 'Facebook',
       avatarUrl: 'http://conf.reactjs.com/img/isaac-salier-hellendag.jpg'
-    }
+    },
+    description: [
+      'Plain text is boring. At Facebook, we want to give our users the ability to add mentions, emoticons, hashtags, styles, and embedded media within the content they share. The result is that nearly every input on Facebook requires rich text features.',
+      'As UI engineers, we want to provide our product teams with the tools to implement and expand upon these features without pushing them into the contentEditable pit of despair.',
+      'This talk will dive into the details of how we used React, ImmutableJS, and yes, contentEditable, to create an editor framework that enables engineers to build and customize rich text composition experiences across Facebook.'
+    ]
   },
   {
     startTime: '12:00',
@@ -142,18 +151,19 @@ class Schedule extends React.Component {
           dataSource={this.state.dataSource}
           renderRow={this.renderRow.bind(this)}
           renderSectionHeader={this.renderSectionHeader.bind(this)}
-          contentInset={{bottom:48}}
-          automaticallyAdjustContentInsets={false}
-          onScroll={this._handleScroll.bind(this)} />
+          automaticallyAdjustContentInsets={false} />
       </View>
     );
   }
 
   renderRow(rowData, sectionID, rowID) {
     let title = <Text style={[styles.title, styles.titleSingle]}>{rowData.title}</Text>;
+    let circleStyle;
     let companyLabel;
+    let content;
 
     if(rowData.speaker) {
+      circleStyle = {backgroundColor: globals.colors.secondary};
       if(rowData.speaker.company) {
         companyLabel = `(${rowData.speaker.company})`;
       }
@@ -168,16 +178,30 @@ class Schedule extends React.Component {
       )
     }
 
-    return (
-      <View style={styles.row} key={rowID}>
+    content = (
+      <View style={styles.row}>
         <View style={styles.timeContainer}>
           <Text style={styles.timeText}>{rowData.startTime}</Text>
         </View>
         <View style={styles.details}>
-          <View style={styles.circle}></View>
+          <View style={[styles.circle, circleStyle]}></View>
           { title }
           <View style={styles.separator}></View>
         </View>
+      </View>
+    );
+
+    if(rowData.speaker) {
+      return (
+        <TouchableOpacity onPress={() => this._onRowPressed(rowData)} key={rowID}>
+          { content }
+        </TouchableOpacity>
+      );
+    }
+
+    return (
+      <View key={rowID}>
+        { content }
       </View>
     );
   }
@@ -201,13 +225,14 @@ class Schedule extends React.Component {
     );
   }
 
-  _handleScroll(event) {
-    let {
-      contentInset: { top: topInset },
-      contentOffset: { y: scrollY },
-    } = event.nativeEvent;
-    let scrollDistance = scrollY + topInset;
-    this.state.scrollDistance.setValue(scrollDistance);
+  _onRowPressed(rowData) {
+    let route = {
+      name: 'details',
+      title: 'Talk Details',
+      talkInfo: rowData
+    };
+
+    this.props.navigator.push(route);
   }
 }
 
@@ -237,8 +262,8 @@ let styles = StyleSheet.create({
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingLeft: 15,
+    paddingRight: 15
   },
   timeContainer: {
     width: 40
@@ -251,7 +276,7 @@ let styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: globals.colors.secondary,
+    backgroundColor: '#88C057',
     position: 'absolute',
     left: -5,
     top: 0

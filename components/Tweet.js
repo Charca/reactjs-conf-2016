@@ -5,10 +5,12 @@ let {
   StyleSheet,
   Image,
   View,
-  Text
+  Text,
+  TouchableOpacity
 } = React;
 
-let ParsedText = require('./ParsedText');
+let ParsedText = require('react-native-parsed-text').default;
+let URLHandler = require('react-native-url-handler');
 let moment = require('moment');
 let globals = require('../globals');
 
@@ -18,9 +20,15 @@ class Tweet extends React.Component {
   }
   render() {
     let data = this.props.data;
+    let entities = data.entities;
+    let media;
+
+    if(entities.media && entities.media[0].type === 'photo') {
+      media = <Image source={{uri: entities.media[0].media_url}} style={styles.media} />
+    }
 
     return (
-      <View>
+      <TouchableOpacity onPress={this._onTweetPressed.bind(this)}>
         <View style={styles.content}>
           <Image style={styles.image} source={{uri: data.user.profile_image_url}} />
           <View style={styles.tweet}>
@@ -35,24 +43,34 @@ class Tweet extends React.Component {
               ]}>
               { data.text }
             </ParsedText>
+            { media }
           </View>
         </View>
         <View style={styles.separator}></View>
-      </View>
+      </TouchableOpacity>
     );
+  }
+
+  _onTweetPressed() {
+    let data = this.props.data;
+    let url = `https://twitter.com/${data.user.screen_name}/status/${data.id_str}`;
+
+    console.log(URLHandler);
+
+    URLHandler.openUrl(url);
   }
 }
 
 let styles = StyleSheet.create({
   content: {
     flexDirection: 'row',
-    padding: 20
+    padding: 15
   },
   image: {
     width: 40,
     height: 40,
     borderRadius: 4,
-    marginRight: 15
+    marginRight: 12
   },
   tweet: {
     flex: 1
@@ -64,7 +82,7 @@ let styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: globals.colors.primary,
-    marginBottom: 6
+    marginBottom: 4
   },
   handler: {
     fontSize: 12,
@@ -82,6 +100,11 @@ let styles = StyleSheet.create({
   },
   hashtag: {
     color: globals.colors.secondary
+  },
+  media: {
+    height: 150,
+    borderRadius: 4,
+    marginTop: 6
   },
   separator: {
     height: .5,
