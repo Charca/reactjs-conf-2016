@@ -2,12 +2,13 @@
 
 var React = require('react-native');
 var {
-  StyleSheet,
+  Image,
   Navigator,
-  TouchableOpacity,
   Platform,
+  StyleSheet,
   Text,
-  Image
+  TouchableOpacity,
+  View
 } = React;
 
 var globals = require('../globals');
@@ -23,12 +24,16 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: (Platform.OS === 'ios') ? 12 : 24
   },
+  navBarTitleContainer: {
+    alignSelf: 'center',
+    paddingRight: (Platform.OS === 'ios') ? 0 : 74
+  },
   navBarTitleText: {
-    textAlign: 'center',
-    alignSelf: 'center'
+    textAlign: 'center'
   },
   navBarLeftButton: {
     paddingLeft: 10,
+    marginTop: (Platform.OS === 'ios') ? 0 : 8
   },
   navBarRightButton: {
     paddingRight: 10,
@@ -38,9 +43,11 @@ var styles = StyleSheet.create({
 var NavigationBarRouteMapper = {
   Title(route, navigator, index, navState) {
     return (
-      <Text style={[styles.navBarText, styles.navBarTitleText]}>
-        {route.title}
-      </Text>
+      <View style={styles.navBarTitleContainer}>
+        <Text style={[styles.navBarText, styles.navBarTitleText]}>
+          {route.title}
+        </Text>
+      </View>
     );
   },
   LeftButton(route, navigator, index, navState) {

@@ -9,11 +9,12 @@
 let React = require('react-native');
 let {
   AppRegistry,
+  BackAndroid,
   Image,
+  Navigator,
   ScrollView,
   StatusBarIOS,
   StyleSheet,
-  Navigator,
   Text,
   View,
 } = React;
@@ -47,6 +48,10 @@ class App extends React.Component {
       StatusBarIOS.setStyle('light-content', true);
       StatusBarIOS.setHidden(false, 'fade');
     }
+
+    if (BackAndroid) {
+      BackAndroid.addEventListener('hardwareBackPress', this._handleBackButtonPress.bind(this));
+    }
   }
 
   render() {
@@ -62,7 +67,8 @@ class App extends React.Component {
               style={[styles.container, styles.navigator]}
               initialRoute={routes.list}
               renderScene={this.renderScene.bind(this)}
-              navigationBar={NavBar} />
+              navigationBar={NavBar}
+              ref={component => this._navigator = component} />
           </TabNavigator.Item>
           <TabNavigator.Item
             title="Venue"
@@ -93,6 +99,15 @@ class App extends React.Component {
     } else if(route.name === 'details') {
       return <TalkDetails navigator={navigator} talk={route.talkInfo} />
     }
+  }
+
+  _handleBackButtonPress() {
+    if (this._navigator.getCurrentRoutes().length > 1) {
+      this._navigator.pop();
+      return true;
+    }
+
+    return false;
   }
 }
 
