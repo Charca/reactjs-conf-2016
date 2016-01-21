@@ -148,7 +148,7 @@ let day1Json = [
     endTime: '6:30',
     title: 'Lightning Talks',
     speaker: {
-      name: '9 awesome developers',
+      name: 'Andy Matuschak (Khan Academy), Vivian Cromwell (Chop Technologies, Inc), Vivek Patel (Google), Maria Hollweck (Girls Can Do IT), Kyle Matthews (RelateRocket), Eric Vlad Vicenti (Facebook), Andres Suarez (Facebook), Jake Taylor (Fuse) and Ken Wheeler (Formidable)',
       avatarUrl: 'http://charca.me/images/reactjs-conf/logo.png'
     },
     description: [
@@ -228,7 +228,7 @@ let day2Json = [
     endTime: '12:30',
     title: 'Lightning Talks',
     speaker: {
-      name: '5 awesome developers',
+      name: 'Devon Lindsey (Apple), Eric Sauter (Fixt), Adam Wolff (Facebook), Nicolas Gallagher (Twitter) and Cole Voss (Hudl)',
       avatarUrl: 'http://charca.me/images/reactjs-conf/logo.png'
     },
     description: [
@@ -344,7 +344,7 @@ let day2Json = [
     endTime: '6:30',
     title: 'Lightning Talks',
     speaker: {
-      name: '5 awesome developers',
+      name: 'Elie Rotenberg (Webedia), Leland Richardson (Airbnb), Bob Ralian (Automattic - WordPress.com), Gabe Scholz (Brewhouse Software) and Zak El Fassi (Zaigood)',
       avatarUrl: 'http://charca.me/images/reactjs-conf/logo.png'
     },
     description: [
