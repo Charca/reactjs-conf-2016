@@ -6,7 +6,7 @@
 
 ## Demo
 
-![Demo](http://i.imgur.com/QRLvakE.gifv)
+[Click here to see a demo](http://i.imgur.com/QRLvakE.gifv)
 
 ## How to Run
 1. Clone this repo on your computer.
