@@ -18,6 +18,7 @@
   "exp": {
     "name": "ReactJS Conf 2016",
     "iconUrl": "http://charca.me/images/reactjs-conf/logo.png",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "sdkVersion": "4.0.0"
   }
 }
